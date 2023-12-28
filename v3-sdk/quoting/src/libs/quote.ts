@@ -29,7 +29,11 @@ export async function quote(amountIn: number): Promise<string> {
   return toReadableAmount(quotedAmountOut, CurrentConfig.tokens.out.decimals);
 }
 
-async function getPoolConstants(): Promise<{ fee: number }> {
+async function getPoolConstants(): Promise<{
+  token0: string;
+  token1: string;
+  fee: number;
+}> {
   const currentPoolAddress = computePoolAddress({
     factoryAddress: POOL_FACTORY_CONTRACT_ADDRESS,
     tokenA: CurrentConfig.tokens.in,
@@ -43,7 +47,15 @@ async function getPoolConstants(): Promise<{ fee: number }> {
     getProvider()
   );
 
+  const [token0, token1, fee] = await Promise.all([
+    poolContract.token0(),
+    poolContract.token1(),
+    poolContract.fee()
+  ]);
+
   return {
-    fee: await poolContract.fee()
+    token0,
+    token1,
+    fee
   };
 }
