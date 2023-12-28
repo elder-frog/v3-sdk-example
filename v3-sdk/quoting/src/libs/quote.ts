@@ -10,7 +10,7 @@ import {
 import { fromReadableAmount, toReadableAmount } from "../libs/conversion";
 import { getProvider } from "../libs/providers";
 
-export async function quote(): Promise<string> {
+export async function quote(amountIn: number): Promise<string> {
   const quoterContract = new ethers.Contract(
     QUOTER_CONTRACT_ADDRESS,
     Quoter.abi,
@@ -19,24 +19,17 @@ export async function quote(): Promise<string> {
   const poolConstants = await getPoolConstants();
 
   const quotedAmountOut = await quoterContract.callStatic.quoteExactInputSingle(
-    poolConstants.token0,
-    poolConstants.token1,
+    CurrentConfig.tokens.in.address,
+    CurrentConfig.tokens.out.address,
     poolConstants.fee,
-    fromReadableAmount(
-      CurrentConfig.tokens.amountIn,
-      CurrentConfig.tokens.in.decimals
-    ).toString(),
+    fromReadableAmount(amountIn, CurrentConfig.tokens.in.decimals).toString(),
     0
   );
 
   return toReadableAmount(quotedAmountOut, CurrentConfig.tokens.out.decimals);
 }
 
-async function getPoolConstants(): Promise<{
-  token0: string;
-  token1: string;
-  fee: number;
-}> {
+async function getPoolConstants(): Promise<{ fee: number }> {
   const currentPoolAddress = computePoolAddress({
     factoryAddress: POOL_FACTORY_CONTRACT_ADDRESS,
     tokenA: CurrentConfig.tokens.in,
