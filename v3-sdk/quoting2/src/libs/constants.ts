@@ -26,3 +26,11 @@ export const USDC_TOKEN = new Token(
   'USDC',
   'USD//C'
 )
+
+export const USDT_TOKEN = new Token(
+  SupportedChainId.MAINNET,
+  '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+  6,
+  'USDT',
+  'USDT'
+)
