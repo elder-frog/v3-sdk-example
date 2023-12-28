@@ -10,7 +10,7 @@ import {
 import { fromReadableAmount, toReadableAmount } from "../libs/conversion";
 import { getProvider } from "../libs/providers";
 
-export async function quote(amountIn: number): Promise<string> {
+export async function quote(): Promise<string> {
   const quoterContract = new ethers.Contract(
     QUOTER_CONTRACT_ADDRESS,
     Quoter.abi,
@@ -22,7 +22,7 @@ export async function quote(amountIn: number): Promise<string> {
     poolConstants.token0,
     poolConstants.token1,
     poolConstants.fee,
-    fromReadableAmount(amountIn, CurrentConfig.tokens.in.decimals).toString(),
+    fromReadableAmount(1, CurrentConfig.tokens.in.decimals).toString(),
     0
   );
 

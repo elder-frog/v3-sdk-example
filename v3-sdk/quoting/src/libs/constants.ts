@@ -31,7 +31,7 @@ export const USDT_TOKEN = new Token(
 
 export const ZOOA_TOKEN = new Token(
   SupportedChainId.MAINNET,
-  "0xd1c9cbe7f1975b599b9189ce132a433c4a3c8986",
+  "0xC256F81d35a54c3599B424171d719E9Ae87b2E9b",
   18,
   "ZOOA",
   "ZOOA"
