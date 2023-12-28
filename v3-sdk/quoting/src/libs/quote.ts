@@ -43,5 +43,7 @@ async function getPoolConstants(): Promise<{ fee: number }> {
     getProvider()
   );
 
-  return await poolContract.fee();
+  return {
+    fee: await poolContract.fee()
+  };
 }
