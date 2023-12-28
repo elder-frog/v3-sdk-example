@@ -1,3 +1,3 @@
 import { quote } from "../src/libs/quote";
 
-quote().then(console.log);
+quote(1).then(console.log);
